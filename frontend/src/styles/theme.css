@@ -1,0 +1,396 @@
+/* ——— Sentinel · 守望者主题 ——— */
+/* 设计理念：深海军蓝基底 + 暖琥珀强调 + 绿色安全状态 */
+/* 营造警觉但不焦虑的家庭安防守护感 */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ====== 颜色变量 ====== */
+:root {
+  /* 背景层 */
+  --bg-deep: #070b10;
+  --bg-root: #0b1018;
+  --bg-panel: #0f1520;
+  --bg-elevated: #141c28;
+
+  /* 边框 */
+  --border-subtle: #18202e;
+  --border-default: #1f2a3a;
+  --border-emphasis: #2a374a;
+
+  /* 文字 */
+  --text-primary: #e8e3dc;
+  --text-secondary: #8b8479;
+  --text-muted: #5d5952;
+
+  /* 强调色 — 暖琥珀（安防探照灯） */
+  --accent: #d4993c;
+  --accent-light: #e8b85f;
+  --accent-glow: rgba(212, 153, 60, 0.15);
+  --accent-glow-strong: rgba(212, 153, 60, 0.28);
+
+  /* 状态色 */
+  --ok: #3b9e5a;
+  --ok-glow: rgba(59, 158, 90, 0.12);
+  --warn: #d4993c;
+  --warn-glow: rgba(212, 153, 60, 0.15);
+  --danger: #d94a4a;
+  --danger-glow: rgba(217, 74, 74, 0.12);
+
+  /* 字体 */
+  --font-display: 'DM Serif Display', 'PingFang SC', 'Noto Serif SC', 'SimSun', serif;
+  --font-body: 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* 阴影 */
+  --shadow-panel: 0 2px 12px rgba(0, 0, 0, 0.35), 0 0 1px rgba(255, 255, 255, 0.02);
+  --shadow-glow-amber: 0 0 20px var(--accent-glow), 0 0 2px rgba(212, 153, 60, 0.2);
+  --shadow-glow-danger: 0 0 20px var(--danger-glow);
+
+  /* 过渡 */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* ====== 全局重置 ====== */
+html,
+body {
+  height: 100%;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 全局背景纹理 — 微妙的噪点，模拟安防摄像头的颗粒感 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+#app {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ====== 通用工具类 ====== */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.panel-elevated {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+}
+
+.muted {
+  color: var(--text-secondary);
+}
+
+/* ====== 滚动条 ====== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-emphasis);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ====== 选中文字 ====== */
+::selection {
+  background: var(--accent-glow-strong);
+  color: var(--accent-light);
+}
+
+/* =====================================================
+   Element Plus 组件覆盖
+   ===================================================== */
+
+:root {
+  /* 主色覆盖为琥珀 */
+  --el-color-primary: var(--accent);
+  --el-color-primary-light-3: rgba(212, 153, 60, 0.5);
+  --el-color-primary-light-5: rgba(212, 153, 60, 0.3);
+  --el-color-primary-light-7: rgba(212, 153, 60, 0.15);
+  --el-color-primary-light-9: rgba(212, 153, 60, 0.05);
+
+  --el-color-danger: var(--danger);
+
+  --el-bg-color: var(--bg-panel);
+  --el-bg-color-overlay: var(--bg-elevated);
+  --el-border-color: var(--border-default);
+  --el-border-color-light: var(--border-subtle);
+
+  --el-text-color-primary: var(--text-primary);
+  --el-text-color-regular: var(--text-primary);
+  --el-text-color-secondary: var(--text-secondary);
+
+  --el-fill-color-blank: var(--bg-panel);
+  --el-fill-color: var(--bg-elevated);
+  --el-fill-color-light: var(--bg-elevated);
+  --el-color-info: var(--text-secondary);
+
+  --el-font-family: var(--font-body);
+}
+
+/* ---- Table ---- */
+.el-table {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: var(--bg-root);
+  --el-table-border-color: var(--border-subtle);
+  --el-table-text-color: var(--text-primary);
+  --el-table-header-text-color: var(--text-secondary);
+  --el-table-row-hover-bg-color: rgba(212, 153, 60, 0.04);
+  --el-fill-color-lighter: var(--bg-elevated);
+  font-family: var(--font-body);
+}
+
+.el-table th.el-table__cell {
+  background-color: var(--bg-root);
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-default);
+}
+
+.el-table__body tr:hover > td {
+  background-color: rgba(212, 153, 60, 0.04) !important;
+}
+
+.el-table__body tr {
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+/* ---- Dialog ---- */
+.el-dialog {
+  --el-dialog-bg-color: var(--bg-elevated);
+  --el-dialog-title-font-size: 18px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 18px 22px;
+}
+
+.el-dialog__headerbtn {
+  font-size: 18px;
+}
+
+.el-dialog__body {
+  padding: 22px;
+}
+
+/* ---- Menu ---- */
+.el-menu {
+  --el-menu-bg-color: transparent;
+  --el-menu-text-color: var(--text-secondary);
+  --el-menu-hover-bg-color: rgba(212, 153, 60, 0.06);
+  --el-menu-active-color: var(--accent-light);
+  border-right: none;
+}
+
+.el-menu-item {
+  border-radius: var(--radius-md);
+  margin: 1px 0;
+  font-size: 14px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.el-menu-item.is-active {
+  background: var(--accent-glow) !important;
+  font-weight: 500;
+  color: var(--accent-light) !important;
+  border-left: 2px solid var(--accent);
+}
+
+/* ---- Slider ---- */
+.el-slider__bar {
+  background-color: var(--accent);
+}
+
+.el-slider__button {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.el-slider__runway {
+  background-color: var(--border-default);
+}
+
+/* ---- Input Number ---- */
+.el-input__wrapper {
+  background-color: var(--bg-root);
+  box-shadow: 0 0 0 1px var(--border-default) inset !important;
+  border-radius: var(--radius-md);
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.el-input__wrapper:hover {
+  box-shadow: 0 0 0 1px var(--border-emphasis) inset !important;
+}
+
+.el-input__inner {
+  color: var(--text-primary);
+}
+
+/* ---- Button ---- */
+.el-button {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.el-button--primary {
+  --el-button-bg-color: var(--accent);
+  --el-button-border-color: var(--accent);
+  --el-button-hover-bg-color: var(--accent-light);
+  --el-button-hover-border-color: var(--accent-light);
+  --el-button-active-bg-color: #b8872f;
+  color: #0b0f16;
+  font-weight: 600;
+}
+
+.el-button--default {
+  --el-button-bg-color: var(--bg-elevated);
+  --el-button-border-color: var(--border-default);
+  --el-button-hover-bg-color: var(--border-emphasis);
+  --el-button-text-color: var(--text-primary);
+}
+
+.el-button--danger {
+  --el-button-bg-color: var(--danger);
+  --el-button-border-color: var(--danger);
+  --el-button-hover-bg-color: #e86161;
+}
+
+/* ---- Tag ---- */
+.el-tag {
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.el-tag--info {
+  --el-tag-bg-color: rgba(255, 255, 255, 0.04);
+  --el-tag-border-color: var(--border-default);
+  --el-tag-text-color: var(--text-secondary);
+}
+
+/* ---- Message Box ---- */
+.el-message-box {
+  --el-messagebox-bg-color: var(--bg-elevated);
+  --el-messagebox-border-color: var(--border-default);
+}
+
+.el-message {
+  --el-message-bg-color: var(--bg-elevated);
+  --el-message-border-color: var(--border-default);
+}
+
+/* ---- Pagination ---- */
+.el-pagination {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-text-color: var(--text-primary);
+  --el-pagination-button-bg-color: var(--bg-elevated);
+}
+
+.el-select-dropdown {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+}
+
+/* ---- Checkbox ---- */
+.el-checkbox__inner {
+  background-color: var(--bg-root);
+  border-color: var(--border-default);
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* =====================================================
+   动画
+   ===================================================== */
+
+/* 告警脉冲 */
+@keyframes alarm-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--danger-glow); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* 琥珀呼吸 */
+@keyframes amber-breathe {
+  0%, 100% { box-shadow: 0 0 8px var(--accent-glow); }
+  50% { box-shadow: 0 0 20px var(--accent-glow-strong); }
+}
+
+/* 扫描线 */
+@keyframes scan-line {
+  0% { top: -2px; }
+  100% { top: 100%; }
+}
+
+/* 淡入上移 */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 适配 prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

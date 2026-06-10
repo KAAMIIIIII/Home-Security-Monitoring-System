@@ -1,0 +1,64 @@
+# ======================
+# Python
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# ======================
+# Backend runtime data
+# ======================
+backend/data/
+*.db
+*.sqlite3
+
+# ======================
+# Node / Frontend
+# ======================
+node_modules/
+.DS_Store
+dist/
+dist-ssr/
+coverage/
+*.local
+
+# Vite temp files
+*.timestamp-*.mjs
+
+# ======================
+# IDE / Editor
+# ======================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.tsbuildinfo
+.eslintcache
+
+# ======================
+# Claude Code
+# ======================
+.claude/
+
+# ======================
+# Testing
+# ======================
+/cypress/videos/
+/cypress/screenshots/
+__screenshots__/
+
+# ======================
+# OS
+# ======================
+Thumbs.db
+Desktop.ini
