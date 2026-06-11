@@ -1,5 +1,5 @@
 // 路由表：4 个页面 —— 首页概览 / 实时监控 / 事件记录 / 系统设置
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 import Dashboard from '../views/Dashboard.vue'
@@ -16,6 +16,6 @@ const routes: RouteRecordRaw[] = [
 ]
 
 export default createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
